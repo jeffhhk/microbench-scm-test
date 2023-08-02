@@ -1,6 +1,6 @@
 #lang racket
 ;(include "microbench.mzscheme.scm")
-(require "../microbench/microbench.rkt")
+(require "microbench/microbench.rkt")
 (require racket/control)
 (require racket/unsafe/ops)
 
