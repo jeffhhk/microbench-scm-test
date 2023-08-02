@@ -14,7 +14,7 @@ agreeable to splitting command line arguments
 (define-ftype bvcopy_t (function (u8* u8* size_t) void))    ; make function type
 (define bvcopy (ftype-ref
 		bvcopy_t ()
-		(make-ftype-pointer bvcopy_t "memcpy")))    ; bind function
+		(make-ftype-pointer bvcopy_t "memmove")))    ; bind function
 ;; average 0.015ns per byte
 
 (define (bvcopy-loop bv-dst bv-src n)
@@ -139,7 +139,7 @@ agreeable to splitting command line arguments
 (define-ftype bvcopy2_t (function (uptr uptr size_t) void))    ; make function type
 (define bvcopy2 (ftype-ref
 		bvcopy2_t ()
-		(make-ftype-pointer bvcopy2_t "memcpy")))      ; bind function
+		(make-ftype-pointer bvcopy2_t "memmove")))      ; bind function
 
 (define (bytevector-copy2! src src-start dst dst-start n)
   ;; https://github.com/cisco/ChezScheme/issues/257
