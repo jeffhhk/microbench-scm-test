@@ -12,7 +12,7 @@ A few tests pertaining to implementation-specific features (e.g. FFI, one-shot c
 
 # Library
 
-The measurement routines reside in a separate repository [microbench-scm](https://github.com/jeffhhk/microbench-scm) , integrated as a git subtree.  No additional operations besides git clone are required to use the library.
+The measurement routines reside in a separate repository [microbench-scm](https://github.com/jeffhhk/microbench-scm) , a [microbenchmarking](https://stackoverflow.com/questions/2842695/what-is-microbenchmarking) implementation, integrated as a git subtree.  No additional operations besides git clone are required to use the library.
 
 # Measurement method
 
