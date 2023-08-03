@@ -58,7 +58,6 @@
 	(begin
 	  (bytevector-u8-set! bv-dst n (bytevector-u8-ref bv-src n))
 	  (loop (fx- n 1))))))
-;; average 3.3ns per byte
 
 (define (bvcopy-fxloop-write bv-dst bv-src n)
   ;; simplified to not deal with overlaps
@@ -288,86 +287,6 @@
 	      (for i in data
 		   #f)))
 
-(define (current-continuation1)
-  (display "cc1\n")
-  (call-with-current-continuation
-   (lambda (cc)
-     (cc cc))))
-
-(define (current-continuation2) 
-  (display "cc2\n")
-  (call-with-current-continuation
-   (lambda (cc)
-     (cc cc))))
-
-(define (make-yield2 for-cc)
-  (lambda (value)
-    (let ((cc (current-continuation1)))
-      (if (procedure? cc)
-          (for-cc (cons cc value))
-          (void)))))
-
-; (for v in generator body) will execute body 
-; with v bound to successive values supplied
-; by generator.
-(define-syntax for2
-  (syntax-rules (in)
-    ((_ v in iterator body ...)
-     ; => 
-     (let (;(i iterator)
-           (iterator-cont #f))
-       (letrec ((loop (lambda ()
-                        (let ((cc (current-continuation2)))
-                          (if (procedure? cc)
-                              (if iterator-cont
-				  (begin
-				    (display "have cc. about to iterator-cont\n")
-				    (iterator-cont (void)))
-				  (begin
-				    (display "have cc. about to make-yield\n")
-				    (iterator (make-yield2 cc))))
-                              (let ((it-cont (car cc))
-                                    (it-val  (cdr cc)))
-				(display (format "for-cc: ~a iterator-cont=~a\n" it-val iterator-cont))
-                                (set! iterator-cont it-cont)
-                                (let ((v it-val))
-                                  body ...)
-                                (loop)))))))
-         (loop))))))
-
-#;(for2 i in (make-coroutine-count 3)
-      (display (format "i=~a\n" i)))
-
-(define-syntax for2b
-  (syntax-rules (in)
-    ((_ v in iterator body ...)
-     ; => 
-     (let (;(i iterator)
-           (iterator-cont #f))
-       (letrec ((loop (lambda ()
-                        (let ((cc (current-continuation2)))
-                          (if (procedure? cc)
-                              (if (not iterator-cont)
-				  (begin
-				    (display "have cc. about to make-yield\n")
-				    (iterator (make-yield2 cc)))
-				  (begin
-				    (display "have cc. about to iterator-cont\n")
-				    (iterator-cont (void))))
-                              (let ((it-cont (car cc))
-                                    (it-val  (cdr cc)))
-				(display (format "for-cc: ~a iterator-cont=~a\n" it-val iterator-cont))
-                                (set! iterator-cont it-cont)
-                                (let ((v it-val))
-                                  body ...)
-                                (loop)))))))
-         (loop))))))
-
-#;(for2b i in (make-coroutine-count 3)
-      (display (format "i=~a\n" i)))
-
-
-0
 
 ;; https://stackoverflow.com/questions/30614788/implement-yield-and-send-in-scheme
 (define (make-generator3 procedure)
