@@ -7,9 +7,9 @@ agreeable to splitting command line arguments
 |#
 
 (import 
-	(srfi 28)  ;; gambit
-	(microbench))
+ (srfi 28)  ;; gambit
+ (microbench))
 (begin
   (define (mod x y) (modulo x y))
   (include "../app5_common.scm")
-)
+  )

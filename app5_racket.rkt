@@ -32,18 +32,18 @@
             (loop (+ i 1)))))))
 
 (displayrun "consume enumerator->s"
-	    2 3000 25000
-	    (lambda (nData) (enumerator->s (count-push nData)))
-	    (lambda (data)
-	      #f)
-	    (lambda (data)
-	      (let loop ((i 0)
-			 (data data))
-		(cond
-		 ((procedure? data) (loop i (data)))
-		 ((pair? data) (loop (+ i 1) (cdr data)))
-		 ((null? data) i)
-		 (else `(unrecognized stream ,data))))))
+            2 3000 25000
+            (lambda (nData) (enumerator->s (count-push nData)))
+            (lambda (data)
+              #f)
+            (lambda (data)
+              (let loop ((i 0)
+                         (data data))
+                (cond
+                  ((procedure? data) (loop i (data)))
+                  ((pair? data) (loop (+ i 1) (cdr data)))
+                  ((null? data) i)
+                  (else `(unrecognized stream ,data))))))
 
 
-  
+
