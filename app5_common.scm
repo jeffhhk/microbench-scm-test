@@ -5,6 +5,7 @@
     (display (format "~s\n"
 		     `(,name ,qs)))))
 
+;; Data generators for different types
 (define (range n)
   (define (iter n l)
     (if (< n 0)
@@ -33,6 +34,8 @@
   (iter (- n 1)))
 
 
+;; bvcopy-*: Deconstructing what Chez calls bytevector-copy! (Similar to C memmove)
+;; using bytevector primitives.
 (define (bvcopy-loop bv-dst bv-src n)
   ;; simplified to not deal with overlaps
   (let loop ((n (- n 1)))
@@ -171,7 +174,7 @@
 	      ))
 
 
-
+;; consume generator: counting in the style of SRFI 158: Generators and Accumulators
 (define (make-gen-count n)
   (lambda ()
     (define i 0)
@@ -197,6 +200,14 @@
 		    (when x
 		      (loop)))))))
 
+#| Counting via streams as streams appear in:
+
+    Jason Hemann and Dan Friedman.µkanren: A minimal
+    functional core for relational programming. November 2013.
+    http://webyrd.net/scheme-2013/papers/HemannMuKanren2013.pdf .
+
+I do not know if said paper is the first use of streams in this
+format or if they were taken from elsewhere |#
 
 (define (make-s-count n)
   (let loop ((i 0))
@@ -231,8 +242,11 @@
 		 ((pair? data) (loop (cdr data)))
 		 ;((null? data) #f)
 		 (else #f)))))
-		 
 
+
+;; Yield in call/cc from:
+;;   https://matt.might.net/articles/programming-with-continuations--exceptions-backtracking-search-threads-generators-coroutines/
+;;   https://matt.might.net/articles/programming-with-continuations--exceptions-backtracking-search-threads-generators-coroutines/generators.scm
 (define (current-continuation) 
   (call-with-current-continuation
    (lambda (cc)
@@ -288,7 +302,9 @@
 		   #f)))
 
 
-;; https://stackoverflow.com/questions/30614788/implement-yield-and-send-in-scheme
+;; Yield in call/cc from:
+;;   https://stackoverflow.com/questions/30614788/implement-yield-and-send-in-scheme
+;;   Chez-only call1/cc available as "consume coroutine4" in app5_chez.scm
 (define (make-generator3 procedure)
   (define last-return values)
   (define last-value #f)
