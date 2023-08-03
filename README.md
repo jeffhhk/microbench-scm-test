@@ -76,11 +76,7 @@ bash ./run-on-racket.sh
 
 bash ./run-on-gambit.sh
 
-    microbench/microbench/microbench.sld:
-    /home/jeff/srchome/pmi/src/microbench/microbench-tests/microbench/microbench/microbench.c:
-    app5_gambit/app5_gambit.sld:
-    /home/jeff/srchome/pmi/src/microbench/microbench-tests/app5_gambit/app5_gambit.c:
-    /home/jeff/srchome/pmi/src/microbench/microbench-tests/app5_gambit/app5_gambit_.c:
+    . . .
     ("bvcopy-loop" (((p .5) (ns 20.992755889892578)) ((p .95) (ns 21.40045166015625)) ((p .995) (ns 22.65334129333496)) ((p .9996666666666667) (ns 43.64013671875)) ((p 1.) (ns 47.539472579956055))))
     ("bvcopy-loop-noop" (((p .5) (ns .8571147918701172)) ((p .95) (ns .8940696716308594)) ((p .995) (ns 1.1110305786132812)) ((p .9996666666666667) (ns 2.161264419555664)) ((p 1.) (ns 2.162456512451172))))
     ("bvcopy-fxloop-noop" (((p .5) (ns .743865966796875)) ((p .95) (ns .7712841033935547)) ((p .995) (ns .820159912109375)) ((p .9996666666666667) (ns .8940696716308594)) ((p 1.) (ns .9059906005859375))))
