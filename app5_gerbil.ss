@@ -19,6 +19,30 @@ agreeable to splitting command line arguments
   (define bytevector-u8-ref u8vector-ref)
   (define bytevector-u8-set! u8vector-set!)
   (define make-bytevector make-u8vector)
+
+  #|
+  Replacing the defines above with these define-macros:
+
+    (define-macro (make-bytevector n) `(make-u8vector ,n))
+    (define-macro (bytevector-u8-ref v i) `(u8vector-ref ,v ,i))
+    (define-macro (bytevector-u8-set! v i x) `(u8vector-set! ,v ,i ,x))
+    (define-macro (bytevector-length n) `(u8vector-length ,n))
+
+
+  causes compilation failure:
+
+    *** ERROR IN gx#core-expand-ref% -- Syntax Error
+    *** ERROR IN "app5_common.scm"@103.47
+    --- Syntax Error: Reference to unbound identifier
+    ... form:   (%#ref bytevector-length)
+    ... detail: bytevector-length at "app5_common.scm"@103.47
+
+  Adding (import :gerbil/gambit) does not help.
+
+  Adding ## before right hand sides also does not help
+
+  |#
+
   (define (main)
     (include "./app5_common.scm")
   ))
