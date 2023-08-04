@@ -10,6 +10,10 @@ agreeable to splitting command line arguments
  (srfi 28)  ;; gambit
  (microbench))
 (begin
+  (define-macro (make-bytevector n) `(make-u8vector ,n))
+  (define-macro (bytevector-u8-ref v i) `(u8vector-ref ,v ,i))
+  (define-macro (bytevector-u8-set! v i x) `(u8vector-set! ,v ,i ,x))
+
   (define (mod x y) (modulo x y))
   (include "../app5_common.scm")
   )
