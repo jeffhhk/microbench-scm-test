@@ -26,7 +26,7 @@ agreeable to splitting command line arguments
     (define-macro (make-bytevector n) `(make-u8vector ,n))
     (define-macro (bytevector-u8-ref v i) `(u8vector-ref ,v ,i))
     (define-macro (bytevector-u8-set! v i x) `(u8vector-set! ,v ,i ,x))
-    (define-macro (bytevector-length n) `(u8vector-length ,n))
+    (define-macro (bytevector-length v) `(u8vector-length ,v))
 
 
   causes compilation failure:
